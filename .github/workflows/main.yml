@@ -19,16 +19,23 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16' # Cambia a la versión que necesites
+          node-version: '16'
 
-      - name: debug
-        run: ls -la services
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Run linter
-        run: npm run lint
-
-      - name: Run tests
-        run: npm test
+      - name: Run linter and tests for all services
+        run: |
+          for dir in services/*; do
+            if [ -f "$dir/package.json" ]; then
+              echo "Running npm install, lint, and test in $dir"
+              cd $dir
+              npm install
+              npm run lint
+              npm test
+              cd -  # Go back to the previous directory
+            fi
+          done
 
   # Trabajo para el branch master
   docker-build-and-push:
