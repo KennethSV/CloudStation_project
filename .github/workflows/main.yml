@@ -19,17 +19,11 @@ jobs:
         with:
           node-version: '16'
 
-      - name: cd to services/articles-management
-        run: cd services/articles-management
-
       - name: Run npm install
-        run: npm install
+        run: cd services/articles-management && npm install
 
       - name: Run npm lint
-        run: npm run lint
-
-      - name: Go back to home directory
-        run: cd
+        run: cd services/articles-management && npm run lint
 
   # Job for the master branch: Docker build and push
   docker-build-and-push:
