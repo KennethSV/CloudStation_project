@@ -20,10 +20,10 @@ jobs:
           node-version: '16'
 
       - name: Run npm install
-        run: cd services/articles-management && npm install
+        run: cd services/events-management && npm install
 
       - name: Run npm lint
-        run: cd services/articles-management && npm run lint
+        run: cd services/events-management && npm run lint
 
   # Job for the master branch: Docker build and push
   docker-build-and-push:
