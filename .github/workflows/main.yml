@@ -7,7 +7,6 @@ on:
       - master
 
 jobs:
-  # Job for the develop branch: Linter and tests
   linter-and-tests:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop'
@@ -24,11 +23,12 @@ jobs:
         run: |
           for dir in services/*; do
             if [ -f "$dir/package.json" ]; then
-              echo "Running npm install, lint, and test in $dir"
+              echo "Running npm install, lint, test, and audit in $dir"
               cd $dir
               npm install
               npm run lint
               npm test
+              npm audit --exit-code  # This will fail the job if vulnerabilities are found
               cd -  # Go back to the previous directory
             fi
           done
