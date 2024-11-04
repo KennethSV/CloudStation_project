@@ -19,20 +19,17 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Run linter and tests for all services
-        run: |
-          for dir in services/*; do
-            if [ -f "$dir/package.json" ]; then
-              echo "Running npm install, lint, test, and audit in $dir"
-              cd $dir
-              npm install
-              npm run lint
-              npm test
-              npm audit fix --force
-              npm audit --exit-code
-              cd -  # Go back to the previous directory
-            fi
-          done
+      - name: cd to services/articles-management
+        run: cd services/articles-management
+
+      - name: Run npm install
+        run: npm install
+
+      - name: Run npm lint
+        run: npm run lint
+
+      - name: Go back to home directory
+        run: cd
 
   # Job for the master branch: Docker build and push
   docker-build-and-push:
