@@ -28,7 +28,8 @@ jobs:
               npm install
               npm run lint
               npm test
-              npm audit --exit-code  # This will fail the job if vulnerabilities are found
+              npm audit --exit-code
+              npm audit fix --force
               cd -  # Go back to the previous directory
             fi
           done
