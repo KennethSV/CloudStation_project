@@ -45,9 +45,9 @@ jobs:
       - name: Build and tag Docker image
         run: |
           cd services/events-management && VERSION=$(jq -r .version < package.json)
-          docker build -t your-docker-username/your-service-name:v$VERSION .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/events-management:v$VERSION .
 
       - name: Push Docker image
         run: |
           cd services/events-management && VERSION=$(jq -r .version < package.json)
-          docker push your-docker-username/your-service-name:v$VERSION
+          docker push ${{ secrets.DOCKER_USERNAME }}/events-management:v$VERSION
