@@ -44,10 +44,10 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          VERSION=$(jq -r .version < package.json)
+          cd services/events-management && VERSION=$(jq -r .version < package.json)
           docker build -t your-docker-username/your-service-name:v$VERSION .
 
       - name: Push Docker image
         run: |
-          VERSION=$(jq -r .version < package.json)
+          cd services/events-management && VERSION=$(jq -r .version < package.json)
           docker push your-docker-username/your-service-name:v$VERSION
