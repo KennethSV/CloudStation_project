@@ -1,6 +1,5 @@
 name: CI/CD Workflow
 
-# Se ejecuta en push a los branches especificados
 on:
   push:
     branches:
@@ -8,7 +7,7 @@ on:
       - master
 
 jobs:
-  # Trabajo para el branch develop
+  # Job for the develop branch: Linter and tests
   linter-and-tests:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop'
@@ -20,9 +19,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-
-      - name: Checkout code
-        uses: actions/checkout@v3
 
       - name: Run linter and tests for all services
         run: |
@@ -37,7 +33,7 @@ jobs:
             fi
           done
 
-  # Trabajo para el branch master
+  # Job for the master branch: Docker build and push
   docker-build-and-push:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
@@ -51,15 +47,15 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}  # Configura este secret en GitHub
-          password: ${{ secrets.DOCKER_PASSWORD }}  # Configura este secret en GitHub
+          username: ${{ secrets.DOCKER_USERNAME }}  # Set this secret in GitHub
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Set this secret in GitHub
 
       - name: Build and tag Docker image
         run: |
-          VERSION=$(cat package.json | jq -r .version)
-          docker build -t <user/nombre_servicio>:v$VERSION .
+          VERSION=$(jq -r .version < package.json)
+          docker build -t your-docker-username/your-service-name:v$VERSION .
 
       - name: Push Docker image
         run: |
-          VERSION=$(cat package.json | jq -r .version)
-          docker push <user/nombre_servicio>:v$VERSION
+          VERSION=$(jq -r .version < package.json)
+          docker push your-docker-username/your-service-name:v$VERSION
