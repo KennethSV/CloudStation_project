@@ -11,7 +11,7 @@ services:
     environment:
       - PORT=3000
       - MESSAGE_BUS=amqp://rabbitmq
-    links:
+    depends_on:
       - rabbitmq
   
   events-management:
@@ -24,7 +24,7 @@ services:
     environment:
       - PORT=3000
       - MESSAGE_BUS=amqp://rabbitmq
-    links:
+    depends_on:
       - rabbitmq
   
   user-management:
@@ -37,7 +37,7 @@ services:
     environment:
       - PORT=3000
       - MESSAGE_BUS=amqp://rabbitmq
-    links:
+    depends_on:
       - rabbitmq
   
   authentication:
@@ -50,7 +50,7 @@ services:
     environment:
       - PORT=3000
       - MESSAGE_BUS=amqp://rabbitmq
-    links:
+    depends_on:
       - rabbitmq
   
   notification:
@@ -64,7 +64,7 @@ services:
       - EMAIL_ID=noreply.localnewsapplication@gmail.com
       - EMAIL_PASSWORD=Testing0*
       - ADMIN_EMAIL=localnewsapp340ct@gmail.com
-    links:
+    depends_on:
       - rabbitmq
 
   rabbitmq:
