@@ -3,14 +3,14 @@ name: CI/CD Workflow (services/events-management)
 on:
   push:
     paths: 
-      - 'services/events-management'
+      - 'services/events-management/**'
     branches:
       - develop
       - master
 
   pull_request:
     paths: 
-      - 'services/events-management'
+      - 'services/events-management/**'
     branches:
       - develop
       - master
